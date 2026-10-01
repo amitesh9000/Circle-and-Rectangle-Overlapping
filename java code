@@ -1,0 +1,24 @@
+class Solution {
+    public boolean checkOverlap(int radius, int xCenter, int yCenter, int x1, int y1, int x2, int y2) {
+        // Find the shortest distance from the circle's center to the rectangle's border along the x axis
+        int deltaX = shortestDistanceToSegment(x1, x2, xCenter);
+        // Find the shortest distance from the circle's center to the rectangle's border along the y axis
+        int deltaY = shortestDistanceToSegment(y1, y2, yCenter);
+        // Check if the combined distance of both axes' deltas is within the radius (using the Pythagorean theorem)
+        return deltaX * deltaX + deltaY * deltaY <= radius * radius;
+    }
+
+    // Helper method to find the shortest distance from a point 'center' to a line segment defined by 'segmentStart' and 'segmentEnd'
+    private int shortestDistanceToSegment(int segmentStart, int segmentEnd, int center) {
+        // If the center is between the start and end points of the segment, it means the shortest distance is 0
+        if (segmentStart <= center && center <= segmentEnd) {
+            return 0;
+        }
+        // If the center is before the start, calculate the distance from the center to the start
+        if (center < segmentStart) {
+            return segmentStart - center;
+        }
+        // If the center is past the end, calculate the distance from the center to the end
+        return center - segmentEnd;
+    }
+}
